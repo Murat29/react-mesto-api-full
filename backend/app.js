@@ -23,7 +23,13 @@ app.post('/signup', createUser);
 app.use(auth);
 app.use('/', routeCards);
 app.use('/', routeUsers);
-app.use((req, res) => res.status(404).send({ message: 'Запрашиваемый ресурс не найден' }));
+app.use((err, req, res, next) => {
+  if (err.name === 'CastError') {
+    return res.status(400).send({ message: 'Такого пользователя нет' });
+  }
+  if (err.name === 'ValidationError') return res.status(400).send({ message: 'Переданы некорректные данные' });
+  res.status(500).send({ message: 'На сервере произошла ошибка' });
+});
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console

@@ -1,30 +1,26 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const NotFoundError = require('../errors/not-found-err');
 
 // GET
-module.exports.getUsers = (req, res) => {
+module.exports.getUsers = (req, res, next) => {
   User.find({})
     .then((users) => res.send(users))
-    .catch((err) => res.status(500).send({ message: err.message }));
+    .catch(next);
 };
 
-module.exports.getUser = (req, res) => {
+module.exports.getUser = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
-      if (!user) return res.status(404).send({ message: 'Такого пользователя нет' });
+      if (!user) throw new NotFoundError('Такого пользователя нет');
       return res.send(user);
     })
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        return res.status(400).send({ message: 'Такого пользователя нет' });
-      }
-      return res.status(500).send({ message: err.message });
-    });
+    .catch(next);
 };
 
 // POST
-module.exports.createUser = (req, res) => {
+module.exports.createUser = (req, res, next) => {
   const {
     name, about, avatar, email, password,
   } = req.body;
@@ -37,10 +33,7 @@ module.exports.createUser = (req, res) => {
         name: user.name, about: user.about, avatar: user.avatar, email: user.email,
       });
     })
-    .catch((err) => {
-      if (err.name === 'ValidationError') return res.status(400).send({ message: 'Переданы некорректные данные' });
-      return res.status(500).send({ message: err.message });
-    });
+    .catch(next);
 };
 
 module.exports.login = (req, res) => {
