@@ -6,6 +6,7 @@ const routeCards = require('./routes/cards.js');
 const routeUsers = require('./routes/users.js');
 const { createUser, login } = require('./controllers/users');
 const auth = require('./middlewares/auth');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -18,6 +19,8 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(requestLogger);
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
@@ -38,16 +41,17 @@ app.use(auth);
 app.use('/', routeCards);
 app.use('/', routeUsers);
 
+app.use(errorLogger);
+
 app.use(errors());
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
-  if (err.name === 'CastError') {
-    return res.status(400).send({ message: 'Такого пользователя нет' });
+  if (err.name === 'CastError' || err.name === 'ValidationError') {
+    return res.status(400).send({ message: err.message });
   }
-  if (err.name === 'CastError') {
-    return res.status(400).send({ message: 'Такой карточки нет' });
-  }
-  if (err.name === 'ValidationError') return res.status(400).send({ message: 'Переданы некорректные данные' });
-  return res.status(500).send({ message: 'На сервере произошла ошибка' });
+  const { statusCode = 500, message } = err;
+
+  return res.status(statusCode).send({ message: statusCode === 500 ? 'На сервере произошла ошибка' : message });
 });
 
 app.listen(PORT, () => {
