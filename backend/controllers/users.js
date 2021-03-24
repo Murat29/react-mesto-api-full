@@ -4,12 +4,6 @@ const User = require('../models/user');
 const NotFoundError = require('../errors/not-found-err');
 
 // GET
-module.exports.getUsers = (req, res, next) => {
-  User.find({})
-    .then((users) => res.send(users))
-    .catch(next);
-};
-
 module.exports.getUser = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
@@ -36,7 +30,7 @@ module.exports.createUser = (req, res, next) => {
     .catch(next);
 };
 
-module.exports.login = (req, res) => {
+module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
 
   return User.findUserByCredentials(email, password)
@@ -44,11 +38,11 @@ module.exports.login = (req, res) => {
       const token = jwt.sign({ _id: user._id }, 'some-secret-key', { expiresIn: '7d' });
       return res.send({ token });
     })
-    .catch(() => res.status(401).send({ message: 'Неправильная почта или пароль' }));
+    .catch(next);
 };
 
 // PATCH
-module.exports.updateNameAndAboutUser = (req, res) => {
+module.exports.updateNameAndAboutUser = (req, res, next) => {
   const { name, about } = req.body;
 
   User.findByIdAndUpdate(req.user._id,
@@ -59,21 +53,13 @@ module.exports.updateNameAndAboutUser = (req, res) => {
       upsert: true,
     })
     .then((user) => {
-      if (!user) return res.status(404).send({ message: 'Такого пользователя нет' });
+      if (!user) throw new NotFoundError('Такого пользователя нет');
       return res.send(user);
     })
-    .catch((err) => {
-      if (err.name === 'ValidationError') {
-        return res.status(400).send({ message: 'Переданы некорректные данные' });
-      // eslint-disable-next-line no-else-return
-      } else if (err.name === 'CastError') {
-        return res.status(400).send({ message: 'Такого пользователя нет' });
-      }
-      return res.status(500).send({ message: err.message });
-    });
+    .catch(next);
 };
 
-module.exports.updateAvatarUsers = (req, res) => {
+module.exports.updateAvatarUsers = (req, res, next) => {
   const { avatar } = req.body;
 
   User.findByIdAndUpdate(req.user._id,
@@ -84,13 +70,5 @@ module.exports.updateAvatarUsers = (req, res) => {
       upsert: true,
     })
     .then((user) => res.send(user))
-    .catch((err) => {
-      if (err.name === 'ValidationError') {
-        return res.status(400).send({ message: 'Переданы некорректные данные' });
-      // eslint-disable-next-line no-else-return
-      } else if (err.name === 'CastError') {
-        return res.status(400).send({ message: 'Такого пользователя нет' });
-      }
-      return res.status(500).send({ message: err.message });
-    });
+    .catch(next);
 };
