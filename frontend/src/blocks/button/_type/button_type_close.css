@@ -1,0 +1,18 @@
+.button_type_close {
+    position: absolute;
+    top: -40.7px;
+    right: -40.7px;
+    width: 40.7px;
+    height: 40.7px;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: -1;
+}
+
+@media screen and (max-width: 572px) {
+    .button_type_close {
+        top: -30px;
+        right: -30px;
+        width: 30px;
+        height: 30px;
+    }
+}

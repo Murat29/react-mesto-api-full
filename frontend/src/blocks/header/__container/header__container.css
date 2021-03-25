@@ -1,0 +1,13 @@
+.header__container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+@media screen and (max-width: 424px) {
+  .header__container {
+    flex-direction: column;
+    align-self: normal;
+    justify-content: space-evenly;
+  }
+}

@@ -4,7 +4,7 @@ const NotFoundError = require('../errors/not-found-err');
 
 // GET
 module.exports.getCards = (req, res, next) => {
-  Card.find({})
+  Card.find({}).populate('user')
     .then((cards) => res.send(cards))
     .catch(next);
 };
@@ -20,9 +20,9 @@ module.exports.createCard = (req, res, next) => {
 
 // DELETE
 module.exports.deleteCard = (req, res, next) => {
-  Card.find({ _id: req.params.cardId })
+  Card.findById(req.params.cardId)
     .then((card) => {
-      if (card.owner._id !== req.params.cardId) throw new ConflictError('Нельзя удалить чужую карточку');
+      if (String(card.owner) !== req.user._id) throw new ConflictError('Нельзя удалить чужую карточку');
       return Card.findByIdAndRemove(req.params.cardId);
     })
     .then((card) => {

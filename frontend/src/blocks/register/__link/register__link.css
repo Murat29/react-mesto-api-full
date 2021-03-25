@@ -1,0 +1,11 @@
+.register__link {
+  text-decoration: none;
+  color: #ffffff;
+  text-align: center;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.register__link:hover {
+  opacity: 0.6;
+}

@@ -1,0 +1,25 @@
+.button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: #000000;
+    padding: 0;
+    margin: 0;
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+    outline: none;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.button:disabled {
+    border: 1px solid black;
+    color: black;
+    background: white;
+    opacity: .2;
+}
+
+.button:hover:enabled {
+    opacity: .6;
+}

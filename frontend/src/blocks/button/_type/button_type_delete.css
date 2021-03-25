@@ -1,0 +1,10 @@
+.button_type_delete {
+    position: absolute;
+    width: 18px;
+    height: 19px;
+    top: 18px;
+    right: 15px;
+    background-color: black;
+    background: url(../../../images/delete.svg) center no-repeat;
+    display: none;
+}

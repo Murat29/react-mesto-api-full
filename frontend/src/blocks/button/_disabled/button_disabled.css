@@ -1,0 +1,6 @@
+.button_disabled {
+    border: 1px solid black;
+    color: black;
+    background: white;
+    opacity: .2;
+}

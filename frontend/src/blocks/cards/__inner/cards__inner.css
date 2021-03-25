@@ -1,0 +1,9 @@
+.cards__inner {
+    background-color: white;
+    min-height: 79px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 21px;
+    padding-right: 21px;
+}

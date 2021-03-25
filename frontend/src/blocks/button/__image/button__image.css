@@ -1,0 +1,6 @@
+.button__image {
+    transform: rotate(45deg);
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
