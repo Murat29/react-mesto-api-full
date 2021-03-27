@@ -8,9 +8,11 @@ const routeUsers = require("./routes/users.js");
 const { createUser, login } = require("./controllers/users");
 const auth = require("./middlewares/auth");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
+const cors = require("cors");
 
 const { PORT = 3000 } = process.env;
 const app = express();
+app.use("*", cors(options));
 
 mongoose.connect("mongodb://localhost:27017/mestodb", {
   useUnifiedTopology: true,
@@ -18,6 +20,18 @@ mongoose.connect("mongodb://localhost:27017/mestodb", {
   useCreateIndex: true,
   useFindAndModify: false,
 });
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin,X-Requested-With,Content-Type,Accept,content-type,application/json"
+  );
+  next();
+});
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
