@@ -13,7 +13,7 @@ const optionsCors = require("./сonstants/optionsCors");
 
 const { PORT = 3000 } = process.env;
 const app = express();
-app.use("*", cors(optionsCors));
+app.use(cors());
 
 mongoose.connect("mongodb://localhost:27017/mestodb", {
   useUnifiedTopology: true,
