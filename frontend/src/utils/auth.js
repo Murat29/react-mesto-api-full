@@ -7,7 +7,6 @@ class Auth {
     return fetch(`${this.url}/signup`, {
       method: "POST",
       headers: this.headers,
-      credentials: "include",
       body: JSON.stringify({ password, email }),
     }).then(this._getResponseData);
   }
@@ -16,7 +15,6 @@ class Auth {
     return fetch(`${this.url}/signin`, {
       method: "POST",
       headers: this.headers,
-      credentials: "include",
       body: JSON.stringify({ password, email }),
     }).then(this._getResponseData);
   }
@@ -28,7 +26,6 @@ class Auth {
         ...this.headers,
         Authorization: `Bearer ${token}`,
       },
-      credentials: "include",
     })
       .then((data) => data.json())
       .then((data) => data);

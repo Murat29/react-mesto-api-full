@@ -3,17 +3,14 @@ const express = require("express");
 const mongoose = require("mongoose");
 const { celebrate, Joi, errors } = require("celebrate");
 const bodyParser = require("body-parser");
-const cors = require("cors");
 const routeCards = require("./routes/cards.js");
 const routeUsers = require("./routes/users.js");
 const { createUser, login } = require("./controllers/users");
 const auth = require("./middlewares/auth");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
-const optionsCors = require("./сonstants/optionsCors");
 
 const { PORT = 3000 } = process.env;
 const app = express();
-app.use(cors());
 
 mongoose.connect("mongodb://localhost:27017/mestodb", {
   useUnifiedTopology: true,
