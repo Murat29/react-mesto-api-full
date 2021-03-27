@@ -1,12 +1,8 @@
 const optionsCors = {
   origin: [
-    'http://localhost:3001',
-    'https://ВАШ ДОМЕЙН С ДОКУМЕНТА', 'https://YOUR.github.io',
+    "http://localhost:3001",
+    "https://http://murat.mesto.backend.nomoredomains.icu",
+    "https://murat29.github.io/react-mesto-api-full/",
   ],
-  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-  allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
-  credentials: true,
 };
 module.exports = optionsCors;

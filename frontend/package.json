@@ -19,7 +19,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "npx eslint"
+    "lint": "npx eslint",
+    "deploy": "npm run build && scp -r ./build/* murat@84.252.131.165:/home/murat/react-mesto-api-full/frontend"
   },
   "eslintConfig": {
     "extends": [

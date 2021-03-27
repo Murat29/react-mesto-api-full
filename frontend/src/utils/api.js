@@ -4,13 +4,6 @@ class Api {
     this.url = config.url;
   }
 
-  getUser(token) {
-    return fetch(`${this.url}/users/me`, {
-      method: "GET",
-      headers: this.headers,
-    }).then(this._getResponseData);
-  }
-
   editUser(dataUser) {
     return fetch(`${this.url}/users/me`, {
       method: "PATCH",
@@ -64,6 +57,7 @@ class Api {
 
   _getResponseData(res) {
     if (!res.ok) {
+      // eslint-disable-next-line no-undef
       return Promise.reject(`Ошибка: ${res.status}`);
     }
     return res.json();
@@ -71,11 +65,11 @@ class Api {
 }
 
 const configApi = {
-  url: "http://localhost:3000",
+  url: "http://murat.mesto.backend.nomoredomains.icu",
   headers: {
-    "Accept": "application/json",
+    Accept: "application/json",
     "Content-Type": "application/json",
-    "Authorization": `Bearer ${localStorage.getItem("token")}`,
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
   },
 };
 

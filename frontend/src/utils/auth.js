@@ -33,6 +33,7 @@ class Auth {
 
   _getResponseData(data) {
     if (!data.ok) {
+      // eslint-disable-next-line no-undef
       return Promise.reject(`Ошибка: ${data.status}`);
     }
     return data.json();
@@ -40,9 +41,9 @@ class Auth {
 }
 
 const configAuth = {
-  url: "http://localhost:3000",
+  url: "http://murat.mesto.backend.nomoredomains.icu",
   headers: {
-    "Accept": "application/json",
+    Accept: "application/json",
     "Content-Type": "application/json",
   },
 };
