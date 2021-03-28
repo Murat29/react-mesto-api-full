@@ -13,16 +13,10 @@ const cors = require("cors");
 const { PORT = 3000 } = process.env;
 const app = express();
 const options = {
-  origin: [
-    "http://murat.mesto.nomoredomains.icu",
-    "https://murat.mesto.nomoredomains.icu",
-  ],
+  origin: "*",
   methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-  allowedHeaders: ["Content-Type", "origin", "Authorization"],
 };
-app.use("*", cors(options));
+app.use(cors(options));
 
 mongoose.connect("mongodb://localhost:27017/mestodb", {
   useUnifiedTopology: true,
