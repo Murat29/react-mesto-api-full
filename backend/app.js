@@ -14,8 +14,8 @@ const { PORT = 3000 } = process.env;
 const app = express();
 const options = {
   origin: [
-    "http://murat.mesto.nomoredomains.icu/sign-up",
-    "https://murat.mesto.nomoredomains.icu/sign-up",
+    "http://murat.mesto.nomoredomains.icu",
+    "https://murat.mesto.nomoredomains.icu",
   ],
 };
 app.use("*", cors(options));
