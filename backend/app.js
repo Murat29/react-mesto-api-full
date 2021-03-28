@@ -12,12 +12,14 @@ const cors = require("cors");
 
 const { PORT = 3000 } = process.env;
 const app = express();
-const options = {
-  origin: "*",
+const corsOptions = {
+  origin: ["*"],
   methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
-  credentials: "true",
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  allowedHeaders: ["Content-Type", "origin", "Authorization"],
 };
-app.use(cors(options));
+app.use("*", cors(corsOptions));
 
 mongoose.connect("mongodb://localhost:27017/mestodb", {
   useUnifiedTopology: true,
