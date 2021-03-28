@@ -17,6 +17,10 @@ const options = {
     "http://murat.mesto.nomoredomains.icu",
     "https://murat.mesto.nomoredomains.icu",
   ],
+  methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  allowedHeaders: ["Content-Type", "origin", "Authorization"],
 };
 app.use("*", cors(options));
 
