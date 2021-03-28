@@ -13,7 +13,7 @@ const cors = require("cors");
 const { PORT = 3000 } = process.env;
 const app = express();
 const options = {
-  origin: "*",
+  origin: "https://murat.mesto.nomoredomains.icu",
   methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
 };
 app.use(cors(options));
