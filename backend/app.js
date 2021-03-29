@@ -13,11 +13,11 @@ const cors = require("cors");
 const { PORT = 3000 } = process.env;
 const app = express();
 const corsOptions = {
-  origin: ["*"],
-  methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-  allowedHeaders: ["Content-Type", "origin", "Authorization"],
+  origin: [
+    "https://murat.mesto.nomoredomains.icu",
+    "http://murat.mesto.nomoredomains.icu",
+  ],
+  credentials: true,
 };
 app.use("*", cors(corsOptions));
 

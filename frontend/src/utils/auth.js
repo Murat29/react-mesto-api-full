@@ -43,7 +43,6 @@ class Auth {
 const configAuth = {
   url: "https://murat.mesto.backend.nomoredomains.icu",
   headers: {
-    Accept: "application/json",
     "Content-Type": "application/json",
   },
 };
