@@ -26,9 +26,7 @@ class Auth {
         ...this.headers,
         Authorization: `Bearer ${token}`,
       },
-    })
-      .then((data) => data.json())
-      .then((data) => data);
+    }).then(this._getResponseData);
   }
 
   _getResponseData(data) {

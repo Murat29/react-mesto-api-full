@@ -49,7 +49,7 @@ function App() {
           history.push("/");
         })
         .then(() => {
-          api.getCards().then((res) => {
+          api.getCards(token).then((res) => {
             setCards(res.reverse());
           });
         })
@@ -80,8 +80,9 @@ function App() {
   }
 
   function handleUpdateUser(datadUser) {
+    const token = localStorage.getItem("token");
     api
-      .editUser(datadUser)
+      .editUser(token, datadUser)
       .then((res) => {
         setCurrentUser(res);
         setIsPopupEditUserInfoOpen(false);
@@ -92,8 +93,9 @@ function App() {
   }
 
   function handleUpdateAvatar(dataAvatar) {
+    const token = localStorage.getItem("token");
     return api
-      .editAvatar(dataAvatar)
+      .editAvatar(token, dataAvatar)
       .then((res) => {
         setCurrentUser(res);
         setIsPopupEditAvatarUserOpen(false);
@@ -104,8 +106,9 @@ function App() {
   }
 
   function handleAddCard(dataCard) {
+    const token = localStorage.getItem("token");
     return api
-      .createCard(dataCard)
+      .createCard(token, dataCard)
       .then((dataCard) => {
         setCards([dataCard, ...cards]);
         setIsPopupAddCardOpen(false);
@@ -116,10 +119,11 @@ function App() {
   }
 
   function handleCardLike(card) {
+    const token = localStorage.getItem("token");
     const isLiked = card.likes.some((i) => i === currentUser._id);
     if (isLiked) {
       api
-        .deleteLike(card._id)
+        .deleteLike(token, card._id)
         .then((newCard) => {
           setCards(updateCards(newCard));
         })
@@ -128,7 +132,7 @@ function App() {
         });
     } else {
       api
-        .putLike(card._id)
+        .putLike(token, card._id)
         .then((newCard) => {
           setCards(updateCards(newCard));
         })
@@ -144,8 +148,9 @@ function App() {
   }
 
   function handleCardDelete(id) {
+    const token = localStorage.getItem("token");
     api
-      .deleteCard(id)
+      .deleteCard(token, id)
       .then(() => setCards(cards.filter((card) => card._id !== id)))
       .catch((err) => {
         console.log(err);
@@ -181,7 +186,8 @@ function App() {
         });
       })
       .then(() => {
-        api.getCards().then((res) => {
+        const token = localStorage.getItem("token");
+        api.getCards(token).then((res) => {
           setCards(res.reverse());
         });
       })

@@ -4,53 +4,74 @@ class Api {
     this.url = config.url;
   }
 
-  editUser(dataUser) {
+  editUser(token, dataUser) {
     return fetch(`${this.url}/users/me`, {
       method: "PATCH",
-      headers: this.headers,
+      headers: {
+        ...this.headers,
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify(dataUser),
     }).then(this._getResponseData);
   }
 
-  getCards() {
+  getCards(token) {
     return fetch(`${this.url}/cards`, {
-      headers: this.headers,
+      headers: {
+        ...this.headers,
+        Authorization: `Bearer ${token}`,
+      },
     }).then(this._getResponseData);
   }
 
-  createCard(dataCard) {
+  createCard(token, dataCard) {
     return fetch(`${this.url}/cards`, {
       method: "POST",
-      headers: this.headers,
+      headers: {
+        ...this.headers,
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify(dataCard),
     }).then(this._getResponseData);
   }
 
-  deleteCard(id) {
+  deleteCard(token, id) {
     return fetch(`${this.url}/cards/${id}`, {
       method: "DELETE",
-      headers: this.headers,
+      headers: {
+        ...this.headers,
+        Authorization: `Bearer ${token}`,
+      },
     }).then(this._getResponseData);
   }
 
-  putLike(id) {
+  putLike(token, id) {
     return fetch(`${this.url}/cards/likes/${id}`, {
       method: "PUT",
-      headers: this.headers,
+      headers: {
+        ...this.headers,
+        Authorization: `Bearer ${token}`,
+      },
     }).then(this._getResponseData);
   }
 
-  deleteLike(id) {
+  deleteLike(token, id) {
     return fetch(`${this.url}/cards/likes/${id}`, {
       method: "DELETE",
-      headers: this.headers,
+      headers: {
+        ...this.headers,
+        Authorization: `Bearer ${token}`,
+      },
     }).then(this._getResponseData);
   }
 
-  editAvatar(dataAvatar) {
+  editAvatar(token, dataAvatar) {
     return fetch(`${this.url}/users/me/avatar`, {
       method: "PATCH",
-      headers: this.headers,
+      headers: {
+        ...this.headers,
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify(dataAvatar),
     }).then(this._getResponseData);
   }
@@ -68,7 +89,6 @@ const configApi = {
   url: "https://murat.mesto.backend.nomoredomains.icu",
   headers: {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
   },
 };
 
