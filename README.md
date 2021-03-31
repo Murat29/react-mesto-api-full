@@ -3,5 +3,5 @@
   
 Пожалуйста, прикрепите в это описание ссылку на сайт, размещенный на Яндекс.Облаке.
 
-frontend - https://murat.mesto.nomoredomains.icu
+frontend - https://murat.mesto.nomoredomains.icu<br/>
 backend - https://murat.mesto.backend.nomoredomains.icu
