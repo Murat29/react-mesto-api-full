@@ -16,6 +16,7 @@ const corsOptions = {
   origin: [
     "https://murat.mesto.nomoredomains.icu",
     "http://murat.mesto.nomoredomains.icu",
+    "http://localhost:3000",
   ],
   credentials: true,
 };
