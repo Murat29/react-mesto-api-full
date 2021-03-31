@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const NotFoundError = require("../errors/not-found-err");
+const ConflictError = require("../errors/conflict-err");
 
 // GET
 module.exports.getUser = (req, res, next) => {
@@ -16,8 +17,12 @@ module.exports.getUser = (req, res, next) => {
 // POST
 module.exports.createUser = (req, res, next) => {
   const { name, about, avatar, email, password } = req.body;
-  bcrypt
-    .hash(password, 10)
+  User.findOne({ email: email })
+    .then((user) => {
+      if (!(user === null))
+        throw new ConflictError("Пользователь с таким email зарегестрирован");
+    })
+    .then(() => bcrypt.hash(password, 10))
     .then((hash) =>
       User.create({
         name,
