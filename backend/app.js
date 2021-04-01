@@ -5,6 +5,7 @@ const { celebrate, Joi, errors } = require('celebrate');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
 const routeCards = require('./routes/cards.js');
 const routeUsers = require('./routes/users.js');
 const { createUser, login } = require('./controllers/users');
@@ -31,6 +32,7 @@ const corsOptions = {
   credentials: true,
 };
 app.use('*', cors(corsOptions));
+app.use(helmet());
 
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useUnifiedTopology: true,
