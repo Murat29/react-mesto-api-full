@@ -118,8 +118,8 @@ function App() {
       });
   }
 
-  function updateCards(newCard) {
-    const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
+  function updateCards(newCard, IdCard) {
+    const newCards = cards.map((c) => (c._id === IdCard ? newCard : c));
     return newCards;
   }
 
@@ -130,7 +130,7 @@ function App() {
       api
         .deleteLike(token, card._id)
         .then((newCard) => {
-          setCards(updateCards(newCard));
+          setCards(updateCards(newCard, card._id));
         })
         .catch((err) => {
           console.log(err);
@@ -139,7 +139,7 @@ function App() {
       api
         .putLike(token, card._id)
         .then((newCard) => {
-          setCards(updateCards(newCard));
+          setCards(updateCards(newCard, card._id));
         })
         .catch((err) => {
           console.log(err);
