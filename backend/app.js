@@ -9,6 +9,7 @@ const routeUsers = require('./routes/users.js');
 const { createUser, login } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const NotFoundError = require('./errors/not-found-err');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -69,8 +70,11 @@ app.use(auth);
 app.use('/', routeCards);
 app.use('/', routeUsers);
 
-app.use(errorLogger);
+app.use(() => {
+  throw new NotFoundError('Запрашиваемый ресурс не найден');
+});
 
+app.use(errorLogger);
 app.use(errors());
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {

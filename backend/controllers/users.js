@@ -5,6 +5,12 @@ const NotFoundError = require('../errors/not-found-err');
 const ConflictError = require('../errors/conflict-err');
 
 // GET
+module.exports.getUsers = (req, res, next) => {
+  User.find({})
+    .then((users) => res.send(users))
+    .catch(next);
+};
+
 module.exports.getUser = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
