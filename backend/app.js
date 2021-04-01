@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const { celebrate, Joi, errors } = require('celebrate');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const rateLimit = require('express-rate-limit');
 const routeCards = require('./routes/cards.js');
 const routeUsers = require('./routes/users.js');
 const { createUser, login } = require('./controllers/users');
@@ -13,6 +14,14 @@ const NotFoundError = require('./errors/not-found-err');
 
 const { PORT = 3000 } = process.env;
 const app = express();
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+});
+
+app.use(limiter);
+
 const corsOptions = {
   origin: [
     'https://murat.mesto.nomoredomains.icu',
