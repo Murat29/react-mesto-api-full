@@ -1,21 +1,21 @@
-import React from "react";
-import Header from "./Header.js";
-import Main from "./Main.js";
-import Register from "./Register.js";
-import Login from "./Login.js";
-import InfoTooltip from "./InfoTooltip.js";
-import Footer from "./Footer.js";
-import PopupEditUserInfo from "./PopupEditUserInfo.js";
-import PopupAddCard from "./PopupAddCard.js";
-import PopupEditAvatarUser from "./PopupEditAvatarUser.js";
-import PopupConsent from "./PopupConsent.js";
-import PopupImg from "./PopupImg.js";
-import api from "../utils/api.js";
-import auth from "../utils/auth.js";
-import CurrentUserContext from "../contexts/CurrentUserContext.js";
-import CardsContext from "../contexts/CardsContext.js";
-import { Switch, Route, useHistory, withRouter } from "react-router-dom";
-import ProtectedRoute from "./ProtectedRoute.js";
+import React from 'react';
+import { Switch, Route, useHistory, withRouter } from 'react-router-dom';
+import Header from './Header.jsx';
+import Main from './Main.jsx';
+import Register from './Register.jsx';
+import Login from './Login.jsx';
+import InfoTooltip from './InfoTooltip.jsx';
+import Footer from './Footer.jsx';
+import PopupEditUserInfo from './PopupEditUserInfo.jsx';
+import PopupAddCard from './PopupAddCard.jsx';
+import PopupEditAvatarUser from './PopupEditAvatarUser.jsx';
+import PopupConsent from './PopupConsent.jsx';
+import PopupImg from './PopupImg.jsx';
+import api from '../utils/api.js';
+import auth from '../utils/auth.js';
+import CurrentUserContext from '../contexts/CurrentUserContext.js';
+import CardsContext from '../contexts/CardsContext.js';
+import ProtectedRoute from './ProtectedRoute.jsx';
 
 function App() {
   const history = useHistory();
@@ -39,14 +39,14 @@ function App() {
   });
 
   React.useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (token) {
       auth
         .checkToken(token)
         .then((res) => {
           setLoggedIn(true);
           setCurrentUser(res);
-          history.push("/");
+          history.push('/');
         })
         .then(() => {
           api.getCards(token).then((res) => {
@@ -80,7 +80,7 @@ function App() {
   }
 
   function handleUpdateUser(datadUser) {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     api
       .editUser(token, datadUser)
       .then((res) => {
@@ -93,7 +93,7 @@ function App() {
   }
 
   function handleUpdateAvatar(dataAvatar) {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     return api
       .editAvatar(token, dataAvatar)
       .then((res) => {
@@ -106,7 +106,7 @@ function App() {
   }
 
   function handleAddCard(dataCard) {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     return api
       .createCard(token, dataCard)
       .then((dataCard) => {
@@ -118,8 +118,13 @@ function App() {
       });
   }
 
+  function updateCards(newCard) {
+    const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
+    return newCards;
+  }
+
   function handleCardLike(card) {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     const isLiked = card.likes.some((i) => i === currentUser._id);
     if (isLiked) {
       api
@@ -140,15 +145,10 @@ function App() {
           console.log(err);
         });
     }
-
-    function updateCards(newCard) {
-      const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
-      return newCards;
-    }
   }
 
   function handleCardDelete(id) {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     api
       .deleteCard(token, id)
       .then(() => setCards(cards.filter((card) => card._id !== id)))
@@ -162,7 +162,7 @@ function App() {
       .register(password, email)
       .then(() => {
         setSatateInfoTooltip({ isOpen: true, status: true });
-        history.push("/sign-in");
+        history.push('/sign-in');
       })
       .catch((err) => {
         setSatateInfoTooltip({ isOpen: true, status: false });
@@ -175,18 +175,18 @@ function App() {
       .authorize(password, email)
       .then((res) => {
         if (res.token) {
-          localStorage.setItem("token", res.token);
+          localStorage.setItem('token', res.token);
         }
       })
-      .then(() => {
-        return auth.checkToken(localStorage.getItem("token")).then((res) => {
+      .then(() =>
+        auth.checkToken(localStorage.getItem('token')).then((res) => {
           setLoggedIn(true);
           setCurrentUser(res);
-          history.push("/");
-        });
-      })
+          history.push('/');
+        })
+      )
       .then(() => {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem('token');
         api.getCards(token).then((res) => {
           setCards(res.reverse());
         });

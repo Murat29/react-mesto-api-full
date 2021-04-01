@@ -1,6 +1,6 @@
-import React from "react";
-import CurrentUserContext from "../contexts/CurrentUserContext.js";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
+import CurrentUserContext from '../contexts/CurrentUserContext.js';
 
 function Card({ card, setSelectedCard, onCardLike, onCardDelete }) {
   const currentUser = React.useContext(CurrentUserContext);
@@ -33,17 +33,17 @@ function Card({ card, setSelectedCard, onCardLike, onCardDelete }) {
       />
       <button
         onClick={handleDeleteClick}
-        className={`button button_type_delete ${isOwn && "button_visible"}`}
-      ></button>
+        className={`button button_type_delete ${isOwn && 'button_visible'}`}
+      />
 
       <div className="cards__inner">
         <h2 className="cards__title">{card.name}</h2>
 
         <div className="card__like-container">
           <button
-            className={`button button_type_like ${isLiked && "button_active"}`}
+            className={`button button_type_like ${isLiked && 'button_active'}`}
             onClick={handleCardLikeClick}
-          ></button>
+          />
           <span className="card__like-number">{card.likes.length}</span>
         </div>
       </div>

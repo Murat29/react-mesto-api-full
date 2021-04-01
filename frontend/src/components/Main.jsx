@@ -1,7 +1,7 @@
-import React from "react";
-import Card from "./Card.js";
-import CurrentUserContext from "../contexts/CurrentUserContext.js";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
+import Card from './Card.jsx';
+import CurrentUserContext from '../contexts/CurrentUserContext.js';
 
 function Main(props) {
   const currentUser = React.useContext(CurrentUserContext);
@@ -25,7 +25,7 @@ function Main(props) {
             <button
               className="button button_type_edit"
               onClick={props.openPopupEditUserInfo}
-            ></button>
+            />
           </div>
 
           <p className="profile__job">{currentUser.about}</p>
@@ -34,7 +34,7 @@ function Main(props) {
         <button
           className="button button_type_add"
           onClick={props.openPopupAddCard}
-        ></button>
+        />
       </section>
 
       <section className="cards">
