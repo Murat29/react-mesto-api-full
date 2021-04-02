@@ -50,10 +50,11 @@ module.exports.createUser = (req, res, next) => {
 
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
+  const { JWT_SECRET = 'dev-key' } = process.env;
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+      const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
         expiresIn: '7d',
       });
       return res.send({ token });
