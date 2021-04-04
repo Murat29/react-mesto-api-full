@@ -1,48 +1,85 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 function Register({ registration }) {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [email, setEmail] = React.useState({
+    value: '',
+    errorMessage: '',
+    valid: false,
+  });
+  const [password, setPassword] = React.useState({
+    value: '',
+    errorMessage: '',
+    valid: false,
+  });
+  const [validForm, setValidForm] = React.useState(false);
 
   function handleChangeEmail(e) {
-    setEmail(e.target.value);
+    setEmail({
+      value: e.target.value,
+      errorMessage: e.target.validationMessage,
+      valid: e.target.validity.valid,
+    });
   }
 
   function handleChangePassword(e) {
-    setPassword(e.target.value);
+    setPassword({
+      value: e.target.value,
+      errorMessage: e.target.validationMessage,
+      valid: e.target.validity.valid,
+    });
   }
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    registration(password, email);
+    registration(password.value, email.value);
   }
+
+  React.useEffect(() => {
+    setValidForm(email.valid && password.valid);
+  }, [email, password]);
 
   return (
     <form className="register" onSubmit={handleSubmit}>
       <h2 className="title">Регистрация</h2>
       <input
-        value={email}
+        value={email.value || ''}
         onChange={handleChangeEmail}
-        className="input"
+        className={`input input_white ${email.errorMessage && 'input_error'}`}
         placeholder="Email"
         minLength="2"
         maxLength="30"
         type="email"
         required
       />
+      <span className="input-error-message" id="popup__input_card-name-error">
+        {email.errorMessage}
+      </span>
       <input
-        value={password}
+        value={password.value || ''}
         onChange={handleChangePassword}
-        className="input"
+        className={`input input_white ${
+          password.errorMessage && 'input_error'
+        }`}
         placeholder="Пароль"
-        minLength="2"
+        minLength="4"
         maxLength="30"
         type="password"
         required
       />
-      <button className="button button_type_white">Зарегистрироваться</button>
+      <span className="input-error-message" id="popup__input_card-name-error">
+        {password.errorMessage}
+      </span>
+      <button
+        className={`button button_type_white ${
+          !validForm && 'button_disabled'
+        }`}
+        disabled={!validForm}
+        type="submit"
+      >
+        Создать
+      </button>
       <Link to="sign-in" className="register__link">
         Уже зарегистрированы? Войти
       </Link>

@@ -1,35 +1,80 @@
-import React from "react";
-import PopupWithForm from "./PopupWithForm";
-import CurrentUserContext from "../contexts/CurrentUserContext.js";
-import PropTypes from "prop-types";
+import React from 'react';
+import PopupWithForm from './PopupWithForm';
+import CurrentUserContext from '../contexts/CurrentUserContext.js';
+import PropTypes from 'prop-types';
 
 function PopupEditUserInfo({ isOpen, closeAllPopups, onUpdateUser }) {
   const currentUser = React.useContext(CurrentUserContext);
 
-  const [name, setName] = React.useState("");
-  const [job, setJob] = React.useState("");
+  const [name, setName] = React.useState({
+    value: '',
+    errorMessage: '',
+    valid: true,
+  });
+  const [job, setJob] = React.useState({
+    value: '',
+    errorMessage: '',
+    valid: true,
+  });
+  const [validForm, setValidForm] = React.useState(false);
 
   function handleChangeName(e) {
-    setName(e.target.value);
+    setName({
+      value: e.target.value,
+      errorMessage: e.target.validationMessage,
+      valid: e.target.validity.valid,
+    });
   }
 
   function handleChangeJob(e) {
-    setJob(e.target.value);
+    setJob({
+      value: e.target.value,
+      errorMessage: e.target.validationMessage,
+      valid: e.target.validity.valid,
+    });
   }
 
   React.useEffect(() => {
-    setName(currentUser.name);
-    setJob(currentUser.about);
+    setName({
+      ...name,
+      value: currentUser.name,
+    });
+    setJob({
+      ...job,
+      value: currentUser.about,
+    });
   }, [currentUser, isOpen]);
 
   function handleSubmit(evt) {
     evt.preventDefault();
 
     onUpdateUser({
-      name: name,
-      about: job,
+      name: name.value,
+      about: job.value,
     });
   }
+
+  React.useEffect(() => {
+    if (!isOpen) {
+      setName({
+        ...name,
+        errorMessage: '',
+      });
+
+      setJob({
+        ...job,
+        errorMessage: '',
+      });
+    }
+  }, [isOpen]);
+
+  React.useEffect(() => {
+    if (currentUser.name === name.value && currentUser.about === job.value) {
+      setValidForm(false);
+    } else {
+      setValidForm(name.valid && job.valid);
+    }
+  }, [name, job]);
 
   return (
     <PopupWithForm
@@ -40,9 +85,9 @@ function PopupEditUserInfo({ isOpen, closeAllPopups, onUpdateUser }) {
       title="Редактировать профиль"
     >
       <input
-        value={name || ""}
+        value={name.value || ''}
         onChange={handleChangeName}
-        className="popup__input"
+        className={`input ${name.errorMessage && 'input_error'}`}
         id="popup__input_user-name"
         name="name_user"
         placeholder="Имя"
@@ -51,13 +96,13 @@ function PopupEditUserInfo({ isOpen, closeAllPopups, onUpdateUser }) {
         type="text"
         required
       />
-      <span className="popup__input-error" id="popup__input_user-name-error">
-        Вы пропустили это поле.
+      <span className="input-error-message" id="popup__input_user-name-error">
+        {name.errorMessage}
       </span>
       <input
-        value={job || ""}
+        value={job.value || ''}
         onChange={handleChangeJob}
-        className="popup__input"
+        className={`input ${job.errorMessage && 'input_error'}`}
         id="popup__input_user-job"
         name="job_user"
         minLength="2"
@@ -66,10 +111,16 @@ function PopupEditUserInfo({ isOpen, closeAllPopups, onUpdateUser }) {
         type="text"
         required
       />
-      <span className="popup__input-error" id="popup__input_user-job-error">
-        Вы пропустили это поле.
+      <span className="input-error-message" id="popup__input_user-job-error">
+        {job.errorMessage}
       </span>
-      <button className="button button__sabmit button_type_save" type="submit">
+      <button
+        className={`button button__sabmit button_type_save  ${
+          !validForm && 'button_disabled'
+        }`}
+        disabled={!validForm}
+        type="submit"
+      >
         Сохранить
       </button>
     </PopupWithForm>

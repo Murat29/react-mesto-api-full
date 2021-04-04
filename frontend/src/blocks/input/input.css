@@ -3,26 +3,32 @@
   height: 27.26px;
   margin-bottom: 5px;
   border: none;
-  border-bottom: 1px solid #cccccc;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  color: #000000;
   font-weight: normal;
   font-size: 14px;
   line-height: 17px;
   outline: none;
-  background-color: #000000;
-  color: #cccccc;
 }
 
 .input:focus {
-  border-bottom-color: #ffffff;
-  color: #ffffff;
-}
-.input:focus::placeholder {
-  color: #ffffff;
+  border-bottom-color: #000000;
 }
 
 .input::placeholder {
   font-weight: normal;
   font-size: 14px;
   line-height: 17px;
-  color: #cccccc;
+  color: #c4c4c4;
+}
+
+@media screen and (max-width: 572px) {
+  .popup__input {
+    font-size: 12px;
+    line-height: 15px;
+  }
+  .popup__input::placeholder {
+    font-size: 12px;
+    line-height: 15px;
+  }
 }

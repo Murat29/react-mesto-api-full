@@ -1,32 +1,61 @@
-import React from "react";
-import PopupWithForm from "./PopupWithForm";
-import PropTypes from "prop-types";
+import React from 'react';
+import PopupWithForm from './PopupWithForm';
+import PropTypes from 'prop-types';
 
 function PopupAddCard({ isOpen, closeAllPopups, onAddCard }) {
-  const [name, setName] = React.useState("");
-  const [link, setLink] = React.useState("");
+  const [name, setName] = React.useState({
+    value: '',
+    errorMessage: '',
+    valid: false,
+  });
+  const [link, setLink] = React.useState({
+    value: '',
+    errorMessage: '',
+    valid: false,
+  });
+  const [validForm, setValidForm] = React.useState(false);
 
   function handleChangeName(e) {
-    setName(e.target.value);
+    setName({
+      value: e.target.value,
+      errorMessage: e.target.validationMessage,
+      valid: e.target.validity.valid,
+    });
   }
 
   function handleChangeLink(e) {
-    setLink(e.target.value);
+    setLink({
+      value: e.target.value,
+      errorMessage: e.target.validationMessage,
+      valid: e.target.validity.valid,
+    });
   }
 
   function handleSubmit(evt) {
     evt.preventDefault();
     onAddCard({
-      name,
-      link,
-    }).then(() => {
-      handleClear();
-    });
+      name: name.value,
+      link: link.value,
+    })
+      .then(() => {
+        handleClear();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   function handleClear() {
-    setName("");
-    setLink("");
+    setName({
+      value: '',
+      errorMessage: '',
+      valid: false,
+    });
+    setLink({
+      value: '',
+      errorMessage: '',
+      valid: false,
+    });
   }
 
   React.useEffect(() => {
@@ -34,6 +63,10 @@ function PopupAddCard({ isOpen, closeAllPopups, onAddCard }) {
       handleClear();
     }
   }, [isOpen]);
+
+  React.useEffect(() => {
+    setValidForm(name.valid && link.valid);
+  }, [name, link]);
 
   return (
     <PopupWithForm
@@ -44,9 +77,9 @@ function PopupAddCard({ isOpen, closeAllPopups, onAddCard }) {
       title="Новое место"
     >
       <input
-        value={name}
+        value={name.value || ''}
         onChange={handleChangeName}
-        className="popup__input"
+        className={`input ${name.errorMessage && 'input_error'}`}
         id="popup__input_card-name"
         name="name"
         minLength="2"
@@ -55,24 +88,28 @@ function PopupAddCard({ isOpen, closeAllPopups, onAddCard }) {
         placeholder="Название"
         required
       />
-      <span className="popup__input-error" id="popup__input_card-name-error">
-        Вы пропустили это поле.
+      <span className="input-error-message" id="popup__input_card-name-error">
+        {name.errorMessage}
       </span>
       <input
-        value={link}
+        value={link.value || ''}
         onChange={handleChangeLink}
-        className="popup__input"
+        className={`input ${link.errorMessage && 'input_error'}`}
         id="popup__input_card-link"
         name="link"
         type="url"
+        pattern="https?://\S+"
         placeholder="Ссылка на картинку"
         required
       />
-      <span className="popup__input-error" id="popup__input_card-link-error">
-        Вы пропустили это поле.
+      <span className="input-error-message" id="popup__input_card-link-error">
+        {link.errorMessage}
       </span>
       <button
-        className="button button__sabmit button_type_add-card"
+        className={`button button__sabmit button_type_add-card ${
+          !validForm && 'button_disabled'
+        }`}
+        disabled={!validForm}
         type="submit"
       >
         Создать

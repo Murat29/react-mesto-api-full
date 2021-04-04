@@ -1,0 +1,7 @@
+.input_error {
+  border-bottom-color: red;
+}
+
+.input_error:focus {
+  border-bottom-color: red;
+}

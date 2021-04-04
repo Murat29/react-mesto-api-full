@@ -34,8 +34,8 @@ function App() {
     setIsPopupEditAvatarUserOpen,
   ] = React.useState(false);
   const [satateInfoTooltip, setSatateInfoTooltip] = React.useState({
-    isOpen: false,
     status: false,
+    isOpen: false,
   });
 
   React.useEffect(() => {
@@ -94,28 +94,18 @@ function App() {
 
   function handleUpdateAvatar(dataAvatar) {
     const token = localStorage.getItem('token');
-    return api
-      .editAvatar(token, dataAvatar)
-      .then((res) => {
-        setCurrentUser(res);
-        setIsPopupEditAvatarUserOpen(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    return api.editAvatar(token, dataAvatar).then((res) => {
+      setCurrentUser(res);
+      setIsPopupEditAvatarUserOpen(false);
+    });
   }
 
   function handleAddCard(dataCard) {
     const token = localStorage.getItem('token');
-    return api
-      .createCard(token, dataCard)
-      .then((dataCard) => {
-        setCards([dataCard, ...cards]);
-        setIsPopupAddCardOpen(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    return api.createCard(token, dataCard).then((dataCard) => {
+      setCards([dataCard, ...cards]);
+      setIsPopupAddCardOpen(false);
+    });
   }
 
   function updateCards(newCard, IdCard) {
@@ -161,11 +151,11 @@ function App() {
     auth
       .register(password, email)
       .then(() => {
-        setSatateInfoTooltip({ isOpen: true, status: true });
+        setSatateInfoTooltip({ status: true, isOpen: true });
         history.push('/sign-in');
       })
       .catch((err) => {
-        setSatateInfoTooltip({ isOpen: true, status: false });
+        setSatateInfoTooltip({ status: false, isOpen: true });
         console.log(err);
       });
   }

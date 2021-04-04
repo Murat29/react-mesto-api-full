@@ -1,0 +1,21 @@
+.input-error-message {
+  min-height: 37px;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: red;
+}
+
+.input-error-message:last-of-type {
+  margin-bottom: 20px;
+}
+
+@media screen and (max-width: 572px) {
+  .input-error-message {
+    font-size: 12px;
+    line-height: 15px;
+  }
+  .input-error-message:last-of-type {
+    margin-bottom: 10px;
+  }
+}

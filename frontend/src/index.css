@@ -35,10 +35,6 @@
 @import url(./blocks/popup/__title/popup__title.css);
 @import url(./blocks/popup/__form/popup__form.css);
 @import url(./blocks/popup/__input-container/popup__input-container.css);
-@import url(./blocks/popup/__input/popup__input.css);
-@import url(./blocks/popup/__input/_type/popup__input_type_error.css);
-@import url(./blocks/popup/__input-error/popup__input-error.css);
-@import url(./blocks/popup/__input-error/_active/popup__input-error_active.css);
 @import url(./blocks/button/_type/button_type_save.css);
 @import url(./blocks/button/_type/button_type_add-card.css);
 @import url(./blocks/button/_active/button_active.css);
@@ -50,6 +46,9 @@
 @import url(./blocks/register/register.css);
 @import url(./blocks/title/title.css);
 @import url(./blocks/input/input.css);
+@import url(./blocks/input/_white/input_white.css);
+@import url(./blocks/input/_error/input_error.css);
+@import url(./blocks/input-error-message/input-error-message.css);
 @import url(./blocks/button/_type/button_type_white.css);
 @import url(./blocks/register/__link/register__link.css);
 @import url(./blocks/login/login.css);
