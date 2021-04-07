@@ -24,7 +24,7 @@
 
 ### Использованные технологий
 * HTML
-* CSS
+* CSS, БЭМ
 * JavaScript
 * React
 * React Router DOM
