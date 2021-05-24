@@ -5,7 +5,7 @@ class Auth {
   }
   register(password, email) {
     return fetch(`${this.url}/signup`, {
-      method: "POST",
+      method: 'POST',
       headers: this.headers,
       body: JSON.stringify({ password, email }),
     }).then(this._getResponseData);
@@ -13,7 +13,7 @@ class Auth {
 
   authorize(password, email) {
     return fetch(`${this.url}/signin`, {
-      method: "POST",
+      method: 'POST',
       headers: this.headers,
       body: JSON.stringify({ password, email }),
     }).then(this._getResponseData);
@@ -21,7 +21,7 @@ class Auth {
 
   checkToken(token) {
     return fetch(`${this.url}/users/me`, {
-      method: "GET",
+      method: 'GET',
       headers: {
         ...this.headers,
         Authorization: `Bearer ${token}`,
@@ -39,9 +39,9 @@ class Auth {
 }
 
 const configAuth = {
-  url: "https://murat.mesto.backend.nomoredomains.icu",
+  url: 'http://localhost:3000',
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
 };
 

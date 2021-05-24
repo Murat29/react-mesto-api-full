@@ -6,7 +6,7 @@ class Api {
 
   editUser(token, dataUser) {
     return fetch(`${this.url}/users/me`, {
-      method: "PATCH",
+      method: 'PATCH',
       headers: {
         ...this.headers,
         Authorization: `Bearer ${token}`,
@@ -26,7 +26,7 @@ class Api {
 
   createCard(token, dataCard) {
     return fetch(`${this.url}/cards`, {
-      method: "POST",
+      method: 'POST',
       headers: {
         ...this.headers,
         Authorization: `Bearer ${token}`,
@@ -37,7 +37,7 @@ class Api {
 
   deleteCard(token, id) {
     return fetch(`${this.url}/cards/${id}`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
         ...this.headers,
         Authorization: `Bearer ${token}`,
@@ -47,7 +47,7 @@ class Api {
 
   putLike(token, id) {
     return fetch(`${this.url}/cards/likes/${id}`, {
-      method: "PUT",
+      method: 'PUT',
       headers: {
         ...this.headers,
         Authorization: `Bearer ${token}`,
@@ -57,7 +57,7 @@ class Api {
 
   deleteLike(token, id) {
     return fetch(`${this.url}/cards/likes/${id}`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
         ...this.headers,
         Authorization: `Bearer ${token}`,
@@ -67,7 +67,7 @@ class Api {
 
   editAvatar(token, dataAvatar) {
     return fetch(`${this.url}/users/me/avatar`, {
-      method: "PATCH",
+      method: 'PATCH',
       headers: {
         ...this.headers,
         Authorization: `Bearer ${token}`,
@@ -86,9 +86,9 @@ class Api {
 }
 
 const configApi = {
-  url: "https://murat.mesto.backend.nomoredomains.icu",
+  url: 'http://localhost:3000',
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
 };
 

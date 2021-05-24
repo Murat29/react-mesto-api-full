@@ -1,5 +1,5 @@
 {
-  "name": "express-mesto",
+  "name": "mesto-api",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Murat29/express-mesto.git"
+    "url": "git+https://github.com/Murat29/react-mesto-api-full.git"
   },
   "keywords": [],
   "author": "Murat29",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Murat29/express-mesto/issues"
+    "url": "https://github.com/Murat29/react-mesto-api-full/issues"
   },
-  "homepage": "https://github.com/Murat29/express-mesto#readme",
+  "homepage": "https://github.com/Murat29/react-mesto-api-full#readme",
   "devDependencies": {
     "eslint": "^7.23.0",
     "eslint-config-airbnb-base": "^14.2.1",

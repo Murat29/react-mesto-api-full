@@ -24,11 +24,7 @@ const limiter = rateLimit({
 app.use(limiter);
 
 const corsOptions = {
-  origin: [
-    'https://murat.mesto.nomoredomains.icu',
-    'http://murat.mesto.nomoredomains.icu',
-    'http://localhost:3000',
-  ],
+  origin: ['http://localhost:3001'],
   credentials: true,
 };
 app.use('*', cors(corsOptions));
